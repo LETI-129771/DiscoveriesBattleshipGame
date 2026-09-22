@@ -9,9 +9,9 @@
 | Engenharia de Telecomunicações e Informática | 129771 | Dinis Candeias |
 | Engenharia de Telecomunicações e Informática | 129779 | Bruno Quinteira |
 | Engenharia de Telecomunicações e Informática | 129816 | Tiago Baleizão |
-
-
-
+  
+  
+  
 ## Tipos de navios
 
 Na versão do jogo ambientada no tempo dos Descobrimentos, os navios utilizados correspondem aos navios tradicionais da Batalha Naval da seguinte forma:
@@ -42,4 +42,36 @@ A caravela corresponde ao navio de 2 canhões. Cada jogador dispõe de 3 caravel
 
 ### Barca
 
-A barca corresponde ao submarino da versão tradicional. Cada jogador dispõe de 4 barcas, ocupando cada uma 1 posição
+A barca corresponde ao submarino da versão tradicional. Cada jogador dispõe de 4 barcas, ocupando cada uma 1 posição.
+
+
+
+## Regras do jogo
+
+Cada jogador começa por construir duas grelhas quadriculadas de 10 × 10: uma representa o seu próprio mar e outra representa o mar do adversário.
+
+Cada jogador deve posicionar os seus navios na sua grelha, podendo colocá-los na orientação horizontal ou vertical.
+
+Os navios:
+
+- devem ser posicionados sem que o adversário os veja;
+- não podem tocar-se entre si;
+- podem estar encostados à borda da grelha;
+- têm de respeitar as dimensões e quantidades definidas para cada tipo de navio.
+
+Depois de os navios serem posicionados, os jogadores jogam alternadamente.
+
+Em cada turno, o jogador atira três tiros sobre a frota adversária, indicando para cada tiro as respetivas coordenadas de linha e coluna.
+
+O adversário deve indicar o resultado dos três tiros, nomeadamente:
+
+- se algum tiro acertou num navio;
+- o tipo de navio atingido;
+- quais dos tiros atingiram água;
+- quais os navios que foram afundados.
+
+Cada jogador deve registar na grelha do adversário os resultados dos seus tiros e identificar os navios que já foram afundados.
+
+### Objetivo
+
+Ganha o jogo o primeiro jogador a conseguir atingir todos os navios da frota adversária.
