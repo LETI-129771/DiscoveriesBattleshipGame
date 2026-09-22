@@ -3,10 +3,8 @@
 *teste **muito** importante*
 
 ## Segundo Teste
-### Terceiro Teste
- Grupo
 
-**Nickname:** Grupo8
+### Grupo 8: Candeias, Baleizão e companhia
 
 ## Membros
 
