@@ -1,12 +1,8 @@
-# Teste
-**negrito** ou *itálico* ou -tachado-
-*teste **muito** importante*
+# Engenharia de Software - ISCTE-IUL
 
-## Segundo Teste
+## Grupo 8: Cambaleigner
 
-### Grupo 8: Lebron Wagner
-
-## Membros
+### Membros
 
 | Curso | Número | Nome |
 |---|---:|---|
