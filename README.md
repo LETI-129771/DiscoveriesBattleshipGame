@@ -13,5 +13,5 @@
 | Curso | Número | Nome |
 |---|---:|---|
 | Engenharia de Telecomunicações e Informática | 129771 | Nome do Membro Dinis Candeias |
-| Engenharia de Telecomunicações e Informática | 12346 | Nome do Membro Bruno Quinteira |
-| Engenharia de Telecomunicações e Informática | 12347 | Nome do Membro Tiago Baleizão |
+| Engenharia de Telecomunicações e Informática | 129779 | Nome do Membro Bruno Quinteira |
+| Engenharia de Telecomunicações e Informática | 129816 | Nome do Membro Tiago Baleizão |
