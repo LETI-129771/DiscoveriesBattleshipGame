@@ -7,6 +7,14 @@ import iscteiul.ista.battleship.Tasks;
  * @author britoeabreu
  * @author adrianolopes
  * @author miguelgoulao
+ * @author Bruno Quinteira
+ * @version 1.0
+ */
+
+/**
+ * Método principal que inicia o fluxo do jogo de Batalha Naval.
+ *
+ * @param args argumentos passados por linha de comandos
  */
 public class App
 {
