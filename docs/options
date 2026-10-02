@@ -1,0 +1,24 @@
+-classpath
+'C:/Users/wwwag/.m2/repository/org/apache/logging/log4j/log4j-core/2.24.1/log4j-core-2.24.1.jar;C:/Users/wwwag/.m2/repository/org/apache/logging/log4j/log4j-api/2.24.1/log4j-api-2.24.1.jar'
+-encoding
+'UTF-8'
+-protected
+--release
+17
+-sourcepath
+'C:/Users/wwwag/IdeaProjects/DiscoveriesBattleshipGame/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/wwwag/IdeaProjects/DiscoveriesBattleshipGame/docs'
+-docencoding
+'UTF-8'
+-doctitle
+'Battleship 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'Battleship 1.0-SNAPSHOT API'
