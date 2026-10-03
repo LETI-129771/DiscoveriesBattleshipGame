@@ -77,3 +77,22 @@ Cada jogador deve registar na grelha do adversário os resultados dos seus tiros
 ### Objetivo
 
 Ganha o jogo o primeiro jogador a conseguir atingir todos os navios da frota adversária.
+
+## Modelos de branching
+
+### GitHub Flow
+Utiliza uma branch principal, main, e branches de curta duração para
+cada alteração. As alterações são submetidas através de um Pull Request,
+revistas e integradas na main.
+
+### Git Flow
+Neste modelo, existem duas branches principais: main e develop.
+A main guarda as versões prontas e a develop reúne o trabalho
+que está a ser desenvolvido.
+Também existem branches para novas funcionalidades (feature),
+preparar versões (release) e corrigir problemas urgentes (hotfix).
+
+### Comparação
+O GitHub Flow é mais simples, porque utiliza menos tipos de branches.
+O Git Flow exige mais organização e é útil quando o projeto
+tem versões com datas de lançamento planeadas.
