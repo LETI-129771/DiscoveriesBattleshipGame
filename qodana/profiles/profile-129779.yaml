@@ -1,0 +1,9 @@
+#129779 Bruno Wagner Filho Quinteira
+profile:
+  base:
+    name: empty
+  inspections:
+    - inspection: OverlyLongMethod
+      enabled: true
+      options:
+        maxMethodLength: 47
