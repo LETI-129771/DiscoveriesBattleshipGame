@@ -237,5 +237,17 @@ public class ShipTest {
         assertEquals(3, shipBorder.getAdjacentPositions().size(), "Error: The number of adjacent positions of a barge in the middle of the tray should be 8.");
     }
 
+    @Test
+    @DisplayName("Test ship creation and position")
+    void testShipInitialization() {
+        // Arrange & Act
+        Ship testShip = new Barge(Compass.NORTH, new Position(3, 4));
+
+        // Assert
+        assertNotNull(testShip, "O navio não deve ser nulo após a instanciação.");
+        assertNotNull(testShip.getPosition(), "A posição inicial não deve ser nula.");
+    }
+
+
 
 }
