@@ -1,8 +1,11 @@
 package battleship;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -248,6 +251,145 @@ public class ShipTest {
         assertNotNull(testShip.getPosition(), "A posição inicial não deve ser nula.");
     }
 
+    @ParameterizedTest(name = "{0} cria {1} com {2} posições")
+    @CsvSource({
+            "barca, Barca, 1",
+            "caravela, Caravela, 2",
+            "nau, Nau, 3",
+            "fragata, Fragata, 4",
+            "galeao, Galeao, 5"
+    })
+    @DisplayName("A fábrica cria os cinco tipos de navio")
+    void buildShipCreatesKnownTypes(String kind, String category, int size) {
+        Position start = new Position(4, 4);
 
+        Ship built = Ship.buildShip(kind, Compass.NORTH, start);
 
+        assertEquals(category, built.getCategory());
+        assertEquals(size, built.getSize());
+        assertEquals(size, built.getPositions().size());
+        assertEquals(Compass.NORTH, built.getBearing());
+        assertEquals(start, built.getPosition());
+    }
+
+    @Test
+    @DisplayName("A fábrica devolve null para um tipo desconhecido")
+    void buildShipReturnsNullForUnknownType() {
+        assertNull(Ship.buildShip("desconhecido", Compass.NORTH, new Position(4, 4)));
+    }
+
+    @Test
+    @DisplayName("A fábrica rejeita argumentos nulos com asserções Java ativas")
+    void buildShipRejectsNullArguments() {
+        Position start = new Position(4, 4);
+
+        assertThrows(AssertionError.class, () -> Ship.buildShip(null, Compass.NORTH, start));
+        assertThrows(AssertionError.class, () -> Ship.buildShip("barca", null, start));
+        assertThrows(AssertionError.class, () -> Ship.buildShip("barca", Compass.NORTH, null));
+    }
+
+    @Test
+    @DisplayName("Os vizinhos de uma caravela no canto excluem casas ocupadas e duplicados")
+    void adjacentPositionsOfCaravelAtCorner() {
+        Ship caravel = new Caravel(Compass.EAST, new Position(0, 0));
+        List<IPosition> neighbors = caravel.getAdjacentPositions();
+
+        assertEquals(4, neighbors.size());
+        assertTrue(neighbors.containsAll(List.of(
+                new Position(0, 2), new Position(1, 0),
+                new Position(1, 1), new Position(1, 2))));
+    }
+
+    @Test
+    @DisplayName("Os extremos de um galeão são calculados a partir de todas as posições")
+    void extremaOfGalleon() {
+        Ship galleon = new Galleon(Compass.EAST, new Position(4, 4));
+        // Put the bottom cell first so the minimum row must be updated.
+        Collections.reverse(galleon.getPositions());
+
+        assertAll(
+                () -> assertEquals(4, galleon.getTopMostPos()),
+                () -> assertEquals(6, galleon.getBottomMostPos()),
+                () -> assertEquals(2, galleon.getLeftMostPos()),
+                () -> assertEquals(4, galleon.getRightMostPos()));
+    }
+
+    @ParameterizedTest(name = "{0} em ({1}, {2}) → {3}")
+    @CsvSource({
+            "EAST, 9, 8, true",
+            "EAST, 4, -1, false",
+            "EAST, 4, 9, false",
+            "NORTH, -1, 4, false",
+            "NORTH, 9, 4, false"
+    })
+    @DisplayName("A caravela pode tocar nos limites mas não ultrapassar nenhum lado do tabuleiro")
+    void caravelBoardBoundaries(Compass bearing, int row, int column, boolean expected) {
+        Ship caravel = new Caravel(bearing, new Position(row, column));
+
+        assertEquals(expected, caravel.isInsideBoard());
+    }
+
+    @Test
+    @DisplayName("A nau deteta ocupação e proximidade a partir de posições além da primeira")
+    void carrackChecksAllPositions() {
+        Ship carrack = new Carrack(Compass.EAST, new Position(5, 4));
+        Ship caravel = new Caravel(Compass.EAST, new Position(6, 2));
+
+        assertTrue(carrack.occupies(new Position(5, 6)));
+        assertFalse(carrack.occupies(new Position(5, 7)));
+        assertTrue(carrack.tooCloseTo(new Position(6, 7)));
+        assertTrue(carrack.tooCloseTo(caravel));
+    }
+
+    @Test
+    @DisplayName("Um tiro marca apenas a casa atingida e a nau flutua até ao último impacto")
+    void carrackFloatsUntilAllPositionsAreHit() {
+        Ship carrack = new Carrack(Compass.EAST, new Position(5, 4));
+        List<IPosition> cells = carrack.getPositions();
+
+        carrack.shoot(new Position(5, 5));
+        assertFalse(cells.get(0).isHit());
+        assertTrue(cells.get(1).isHit());
+        assertFalse(cells.get(2).isHit());
+
+        carrack.shoot(new Position(5, 4));
+        assertTrue(carrack.stillFloating());
+
+        carrack.shoot(new Position(5, 6));
+        assertFalse(carrack.stillFloating());
+    }
+
+    @Test
+    @DisplayName("Afundar uma nau marca todas as suas posições como atingidas")
+    void sinkHitsEveryPosition() {
+        Ship carrack = new Carrack(Compass.EAST, new Position(5, 4));
+
+        carrack.sink();
+
+        assertTrue(carrack.getPositions().stream().allMatch(IPosition::isHit));
+        assertFalse(carrack.stillFloating());
+    }
+
+    @Test
+    @DisplayName("As consultas de ocupação e proximidade rejeitam null com asserções Java ativas")
+    void queriesRejectNullArguments() {
+        assertThrows(AssertionError.class, () -> ship.occupies(null));
+        assertThrows(AssertionError.class, () -> ship.tooCloseTo((IPosition) null));
+        assertThrows(AssertionError.class, () -> ship.tooCloseTo((IShip) null));
+    }
+
+    @Test
+    @DisplayName("Um tiro rejeita null e coordenadas fora do tabuleiro com asserções Java ativas")
+    void shootRejectsInvalidTargets() {
+        assertThrows(AssertionError.class, () -> ship.shoot(null));
+        assertThrows(AssertionError.class, () -> ship.shoot(new Position(-1, 0)));
+    }
+
+    @Test
+    @DisplayName("A descrição do navio inclui categoria, orientação e posição inicial")
+    void shipDescription() {
+        Ship caravel = new Caravel(Compass.EAST, new Position(4, 4));
+
+        assertEquals("[Caravela e E5]", caravel.toString());
+    }
 }
