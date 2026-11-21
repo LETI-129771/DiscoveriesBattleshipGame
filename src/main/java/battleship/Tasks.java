@@ -67,16 +67,7 @@ public class Tasks {
 						game.printMyBoard(false, true);
 					break;
 				case RAJADA:
-					if (game != null) {
-						game.readEnemyFire(in);
-						myFleet.printStatus();
-						game.printMyBoard(true, false);
-
-						if (game.getRemainingShips() == 0) {
-							game.over();
-							System.exit(0);
-						}
-					}
+					handleBarrage(in, myFleet, game);
 					break;
 				case SIMULA:
 					if (game != null) {
@@ -111,6 +102,19 @@ public class Tasks {
 			command = in.next();
 		}
 		System.out.println(GOODBYE_MESSAGE);
+	}
+
+	private static void handleBarrage(Scanner in, IFleet myFleet, IGame game) {
+		if (game != null) {
+			game.readEnemyFire(in);
+			myFleet.printStatus();
+			game.printMyBoard(true, false);
+
+			if (game.getRemainingShips() == 0) {
+				game.over();
+				System.exit(0);
+			}
+		}
 	}
 
 	/**
