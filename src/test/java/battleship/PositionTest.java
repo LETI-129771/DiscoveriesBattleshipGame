@@ -3,6 +3,8 @@ package battleship;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 /**
  * Test class for Position.
  * Author: britoeabreu
@@ -61,8 +63,26 @@ public class PositionTest {
 	}
 
 	@Test
+	@DisplayName("A coluna clássica começa em 1")
 	void getClassicColumn() {
-		assertEquals(3, position.getColumn(), "Failed to get column: expected 3 but got " + position.getColumn());
+		assertEquals(4, position.getClassicColumn());
+	}
+
+	@Test
+	@DisplayName("O construtor clássico aceita uma linha em minúscula e converte as coordenadas")
+	void constructorWithClassicCoordinates() {
+		Position classicPosition = new Position('c', 4);
+
+		assertEquals(2, classicPosition.getRow());
+		assertEquals(3, classicPosition.getColumn());
+		assertFalse(classicPosition.isOccupied());
+		assertFalse(classicPosition.isHit());
+	}
+
+	@Test
+	@DisplayName("Uma posição aleatória fica dentro dos limites do tabuleiro")
+	void randomPositionIsInsideBoard() {
+		assertTrue(Position.randomPosition().isInside());
 	}
 
 	@Test
@@ -120,6 +140,31 @@ public class PositionTest {
 	}
 
 	@Test
+	@DisplayName("Posições na mesma linha separadas por duas colunas não são adjacentes")
+	void isNotAdjacentWhenOnlyColumnIsTooFar() {
+		assertFalse(position.isAdjacentTo(new Position(2, 5)));
+	}
+
+	@Test
+	@DisplayName("Uma posição interior tem os oito vizinhos esperados")
+	void adjacentPositionsAtInterior() {
+		List<IPosition> neighbors = position.adjacentPositions();
+		assertEquals(8, neighbors.size());
+		assertTrue(neighbors.containsAll(List.of(
+				new Position(1, 2), new Position(1, 3), new Position(1, 4),
+				new Position(2, 2), new Position(2, 4),
+				new Position(3, 2), new Position(3, 3), new Position(3, 4))));
+	}
+
+	@Test
+	@DisplayName("Um canto tem apenas os três vizinhos dentro do tabuleiro")
+	void adjacentPositionsAtCorner() {
+		List<IPosition> neighbors = new Position(0, 0).adjacentPositions();
+		assertEquals(3, neighbors.size());
+		assertTrue(neighbors.containsAll(List.of(new Position(0, 1), new Position(1, 0), new Position(1, 1))));
+	}
+
+	@Test
 	void isAdjacentToWithNull() {
 		assertThrows(NullPointerException.class, () -> position.isAdjacentTo(null),
 				"isAdjacentTo should throw NullPointerException for null input");
@@ -165,6 +210,12 @@ public class PositionTest {
 	@Test
 	void equals5() {
 		assertTrue(position.equals(position), "A position should be equal to itself");
+	}
+
+	@Test
+	@DisplayName("Posições com a mesma coluna e linhas diferentes não são iguais")
+	void equalsWithDifferentRows() {
+		assertNotEquals(position, new Position(3, 3));
 	}
 
 	@Test
